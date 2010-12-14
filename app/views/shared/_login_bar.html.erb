@@ -1,0 +1,6 @@
+<% if current_user %>
+  <li><%= link_to t('my_account'), account_path %></li>
+  <li><%= link_to t('logout'), logout_path %></li>
+<% elsif Spree::Auth::Disabler::Config[:client_login_enabled] %>
+  <li><%= link_to t('log_in'), login_path %></li>
+<% end %>

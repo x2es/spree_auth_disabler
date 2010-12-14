@@ -1,0 +1,8 @@
+---
+ru-RU:
+  spree_auth_disabler:
+    client_signup_disabled: 'Регистрация не возможна'
+    password_recovery_disabled: 'Восстановление пароля отключено'
+    client_login_disabled: 'Личный кабинет пользователей отключен'
+
+  

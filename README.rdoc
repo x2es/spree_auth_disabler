@@ -1,0 +1,93 @@
+= SpreeAuthDisabler extension
+
+This extension aims to extend the spree auth logic by options for disabling:
+
+* Client singup
+* Password recovery
+* Client login
+
+Since the extension included in your Gemfile all listed features will be 
+disabled by default.
+
+Use Spree::Auth::Disabler::Config (spree_auth_disabler:app/models/spree_auth_disabler_configuration.rb) 
+for switch this preferences:
+
+* :client_signup_enabled,      :default => false
+* :password_recoverty_enabled, :default => false
+* :client_login_enabled,       :default => false
+
+NOTE: it is recomended to enable client login if client signup enabled, lest 
+clients will get 'Authorization failed' after signup (but the user and the session 
+will be created). See issues below.
+
+== Installing
+
+==== Add into your Gemfile
+
+  gem 'spree_auth_disabler'
+
+or
+
+  gem 'spree_auth_disabler', :git => 'git://github.com/x2es/spree_auth_disabler.git'
+
+NOTE: this extension overrides several views. Loading order does matter. You should place
+this gem above an your theme, at least.
+If other your extensions overrides an auth-views you should decide right loading order.
+You may find useful the gem 'painless_partials' for inspecting the usage roadmap of views.
+
+==== Setup your Spree::Auth::Disabler::Config propertly (see bellow).
+
+== Configuration ways
+
+You can use the Spree::Auth::Disabler::Config in such manner as the Spree::Config or Spreee::Auth::Config
+
+  Spree::Auth::Disabler::Config[:client_login_enabled]              # Returns the foo preference
+  Spree::Auth::Disabler::Config[]                                   # Returns a Hash with all the preferences
+  Spree::Auth::Disabler::Config.instance                            # Returns the configuration object
+  Spree::Auth::Disabler::Config.set(:client_login_enabled => true)  # Set the spree auth preferences as especified in +preference_hash+
+
+Default values initialized in spree_auth_disabler:app/models/spree_auth_disabler_configuration.rb
+
+TODO: two words about overriding preferences class facilities
+
+See the guide http://edgeguides.spreecommerce.com/preferences.html for more details
+
+== Configuration explanation
+
+* unless :client_signup_enabled
+
+  * signup actions will be disabled (new and create), the user will be redirected to root_url, flash[:error] will be supplied
+  * link to signup from login form will be hidden
+
+* unless :password_recoverty_enabled
+  
+  * password recovery actions will be disabled (new and create), redirect and flash[:error] are same as above
+  * link to password recovery from login form will be hidden
+
+* unless :client_login_enabled
+
+  * login actions will deny client login (only create), redirect and flash[:error] are same as above
+  * link to login form will be hidden
+
+  NOTE: 
+    If you have overrided layouts/spree_application.html.erb, you may want to remove the <li> tag
+    surrond the <%= render 'shared/login_bar' %> since an <li> alerady exists in this partial
+
+== Extensions collisions
+
+This extension overrides some views. If you already overrided views, which overrided in this extension too, 
+you may want to checkout differences and apply some changes to your views.
+
+= TODO
+
+* Specs!
+
+== Issues
+
+* 'Autorization failed' ISSUE, when client login disabled, but client signup enabled (after signup)
+
+= Help me
+
+* to fix English grammar in this text (now I am tring to setup articles, but I am not feel yet this aspect to do this job propertly)
+
+ 
