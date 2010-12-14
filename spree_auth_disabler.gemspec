@@ -2,7 +2,7 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_auth_disabler'
   s.version     = '0.0.1'
-  s.summary     = '[Spree-0.30+] extension for disable client signup/auth features'
+  s.summary     = '[Spree-0.30+] extension for disabling client signup/auth features'
   s.description = s.summary
   s.required_ruby_version = '>= 1.8.7'
 
